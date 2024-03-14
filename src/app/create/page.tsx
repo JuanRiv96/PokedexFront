@@ -1,5 +1,5 @@
 "use client"
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, SyntheticEvent } from "react";
 import { useAppDispatch } from "@/hooks";
 import { Input } from "@nextui-org/react";
 import { Select, SelectItem, Selection } from "@nextui-org/react";
@@ -18,8 +18,9 @@ const Create = () => {
     height: "",
     weight: "",
     img: "",
+    types: [""]
   });
-  const [types, setTypes] = useState<Selection>(new Set(["none"]));
+  // const [types, setTypes] = useState<string[]>([]);
   const handleDatos = (e: ChangeEvent<HTMLInputElement>): void => {
     setDatos({
         ...datos,
@@ -27,12 +28,28 @@ const Create = () => {
     })
   }
   const handleTypes = (e: ChangeEvent<HTMLSelectElement>) => {
-    setTypes(new Set(e.target.value.split(",")))
+    setDatos({
+      ...datos,
+      types: e.target.value.split(",")
+  })
+    // setTypes(e.target.value.split(","));
   }
-  const handleSubmit = () => {
-
+  const handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setDatos({
+      name: "",
+      hp: "",
+      attack:"",
+      defense: "",
+      speed: "",
+      height: "",
+      weight: "",
+      img: "",
+      types: [""]
+    });
   }
-  console.log(types)
+  // console.log(types)
+  console.log(datos.types)
 
   return (
     <div className="w-full h-screen flex flex-col justify-center items-center">
@@ -131,8 +148,6 @@ const Create = () => {
               label="Types"
               placeholder="Select types"
               items={mytypes}
-              defaultSelectedKeys={["none"]}
-              selectedKeys={types}
               size="sm"
               isRequired
               onChange={handleTypes}
@@ -155,14 +170,3 @@ const Create = () => {
 };
 
 export default Create;
-
-
-{/* <Listbox className="border h-auto" selectionMode="multiple">
-             {types?.map(type => {
-                return (
-                  <ListboxItem key={type}>
-                    {type}
-                  </ListboxItem>
-                )
-             })}
-            </Listbox> */}
