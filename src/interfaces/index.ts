@@ -21,3 +21,5 @@ export type PokeCard = Omit<
   Pokemons,
   "hp" | "defense" | "speed" | "height" | "weight"
 >;
+
+export type PokeCreate = Omit<Pokemons, "id">;

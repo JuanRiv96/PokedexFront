@@ -21,7 +21,6 @@ const Detail = ({ params }: DetailParams) => {
 
   return (
     <div className="h-screen flex flex-col justify-center items-center">
-      
       <Button isIconOnly variant="faded" as={Link} href="/pokedex" className='absolute top-8 left-11 md:top-12 md:left-14'>
         <GrLinkPrevious size={20}/>
       </Button>

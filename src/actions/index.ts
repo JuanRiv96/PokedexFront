@@ -1,7 +1,7 @@
 import axios from "axios";
 import { getAllPokemons, getPokemonDetail } from "@/reducer";
 import { AppDispatch } from "@/store";
-import { Pokemons } from "@/interfaces";
+import { Pokemons, PokeCreate } from "@/interfaces";
 
 export const getPokemons = () => async (dispatch: AppDispatch) => {
   try {
@@ -21,4 +21,18 @@ export const getDetail = (id: string) => async (dispatch: AppDispatch) => {
   } catch (error) {
     console.log(error);
   }
+};
+
+export const createPokemon = (values: PokeCreate) => {
+  return async function () {
+    try {
+      const response = await axios.post(
+        "http://localhost:3001/pokedex/create",
+        values
+      );
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  };
 };
