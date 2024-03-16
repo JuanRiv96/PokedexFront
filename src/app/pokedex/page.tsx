@@ -1,9 +1,10 @@
 "use client"
 import { useAppDispatch, useAppSelector } from '@/hooks';
-import { useEffect, useState } from 'react';
-import { getPokemons } from '@/actions';
+import { ChangeEvent, useEffect, useState } from 'react';
+import { getPokemons, getPokemonsByStatus } from '@/actions';
 import { PokemonCard }  from '@/components/PokemonCard';
 import { NavBar } from '@/components/NavBar';
+import { Paginado } from '@/components/Paginado';
 import {Select, SelectItem, Pagination} from "@nextui-org/react";
 
 const filters: string[] = ["All", "Created", "Original"];
@@ -24,12 +25,13 @@ const Pokedex = () => {
 
   useEffect(() => {
     dispatch(getPokemons());
-    const page_num = [];
-        for(let i = 1; i <= Math.ceil(pokemons?.length/pokemonsPerPage); i++){  // Math.cail(40/12) = Math.ceil(3.33333) = 4
-            page_num.push(i); // [1, 2, 3, 4]
-        }
-        setPageNumbers(page_num); // Seteo mi estado 
-  },[dispatch, pokemons.length, pokemonsPerPage]);
+  },[dispatch]);
+
+  const handleTypes = (e: ChangeEvent<HTMLSelectElement>) => {
+    console.log(e.target.value);
+    dispatch(getPokemonsByStatus(e.target.value));
+    setCurrentPage(1);
+  }
 
   return (
     <div className="w-full">
@@ -37,7 +39,7 @@ const Pokedex = () => {
       <div className="
         px-5
         w-full
-        pt-14 
+        pt-9 
         space-x-5
         flex justify-center 
         md:px-2"
@@ -57,7 +59,7 @@ const Pokedex = () => {
               "text-black"
             ]
           }}
-          >
+        >
             {filters.map(fil => {
               return (
                 <SelectItem key={fil} value={fil} id={fil}>
@@ -105,7 +107,8 @@ const Pokedex = () => {
               "text-black"
             ]
           }}
-          >
+          onChange = {(e) => handleTypes(e)}
+        >
             {types.map(type => {
               return (
                 <SelectItem key={type} value={type}  id={type}>
@@ -118,12 +121,12 @@ const Pokedex = () => {
       <div className="
         w-full
         gap-3 
-        pt-14
-        mt-20
+        pt-4
+        mt-11
         grid
         grid-cols-1
         justify-items-center
-        md:grid-cols-3"
+        md:grid-cols-3 md:pt-8 md:mt-16"
         >
         {currentPokemons?.map((pokemon, idx) => {
             return (
@@ -138,7 +141,8 @@ const Pokedex = () => {
             );
           })}
       </div>
-       {pageNumbers.length === 0 ? null 
+      <Paginado pokemonsPerPage = {pokemonsPerPage} pokeLength = {pokemons.length} paginado ={setCurrentPage} page={currentPage} />
+       {/* {pageNumbers.length === 0 ? null 
         : 
         <Pagination   
           total={pageNumbers.length}
@@ -151,7 +155,7 @@ const Pokedex = () => {
             flex justify-center
             container mx-auto"
         />
-      }     
+      }      */}
     </div>
   )
 };

@@ -23,3 +23,10 @@ export type PokeCard = Omit<
 >;
 
 export type PokeCreate = Omit<Pokemons, "id">;
+
+export interface PagiProps {
+  pokemonsPerPage: number;
+  pokeLength: number;
+  paginado: (pageNum: number) => void;
+  page: number;
+}

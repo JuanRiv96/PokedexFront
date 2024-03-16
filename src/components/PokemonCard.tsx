@@ -1,6 +1,5 @@
 "use client"
 import {Card, CardHeader, CardBody, Link } from "@nextui-org/react";
-// import Link from "next/link";
 import NextImage from "next/image";
 import { FC } from 'react';
 import { PokeCard } from '@/interfaces';

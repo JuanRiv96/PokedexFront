@@ -1,12 +1,10 @@
 import { Navbar, NavbarContent, NavbarItem, Link, Input } from "@nextui-org/react";
-import { GrSearch } from "react-icons/gr";
 import NextImage from "next/image";
 import pokebola from "../../public/pokebola.png";
 
 export const NavBar = () => {
  
   return (
-    
     <Navbar
      classNames={{
       base:[

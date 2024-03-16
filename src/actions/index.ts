@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getAllPokemons, getPokemonDetail } from "@/reducer";
+import { getAllPokemons, getPokemonDetail, filterPokemon } from "@/reducer";
 import { AppDispatch } from "@/store";
 import { Pokemons, PokeCreate } from "@/interfaces";
 
@@ -36,3 +36,22 @@ export const createPokemon = (values: PokeCreate) => {
     }
   };
 };
+
+export const getPokemonsByStatus =
+  (value: string) => async (dispatch: AppDispatch) => {
+    return dispatch(filterPokemon(value));
+  };
+
+// export const getPokemonByOrder = (value) => {
+//   return {
+//       type: FILTER_BY_ORDER,
+//       payload: value
+//   }
+// };
+
+// export const getPokemonsByType = (value) => {
+//   return {
+//       type: FILTER_BY_TYPE,
+//       payload: value
+//   }
+// }

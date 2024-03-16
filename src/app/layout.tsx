@@ -4,28 +4,6 @@ import type { Metadata } from 'next'
 import store from '@/store'
 import { Provider } from 'react-redux';
 import {NextUIProvider} from '@nextui-org/react'
-import type { ReactElement, ReactNode } from 'react';
-import type { NextPage } from 'next';
-import type { AppProps } from 'next/app'
-
-
-// export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
-//   getLayout?: (page: ReactElement) => ReactNode
-// };
-// type AppPropsWithLayout = AppProps & {
-//   Component: NextPageWithLayout
-// };
-
-// export default function App({ Component, pageProps }: AppPropsWithLayout) {
-//   const getLayout = Component.getLayout ?? ((page) => page)
-//   return getLayout(
-//     <NextUIProvider>
-//     <Provider store={ store }>
-//         <Component {...pageProps} />
-//     </Provider>
-//     </NextUIProvider>
-//   )
-// };
 
 export const metadata: Metadata = {
   title: 'Pokedex App',

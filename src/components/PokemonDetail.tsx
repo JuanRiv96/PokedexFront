@@ -1,11 +1,6 @@
-import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/react";
 import  NextImage from "next/image";
 import { FC } from "react";
 import { Pokemons } from "@/interfaces";
-
-interface PropsDetail {
-  id: string
-}
 
 export const PokemonDetail: FC<Pokemons> = ( { id, name, img, types, hp, attack, defense, speed, height, weight } ) => {
 
