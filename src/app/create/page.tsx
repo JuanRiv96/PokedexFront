@@ -4,7 +4,9 @@ import { useAppDispatch } from "@/hooks";
 import { createPokemon } from "@/actions";
 import { useRouter } from "next/navigation";
 import { Select, SelectItem, Button, Input, Link} from "@nextui-org/react";
-import { GrLinkPrevious } from "react-icons/gr";
+import { NavBar } from '@/components/NavBar';
+import NextImage from "next/image";
+import title from "../../../public/createTitle.png";
 
 const mytypes: string[] = ["none", "normal", "fighting", "flying", "poison", "ground", "rock", "bug", "ghost", "steel", "fire", "water", "grass", "electric", "psychic", "ice", "dragon", "dark", "fairy", "unknown", "shadow"];
 
@@ -23,7 +25,6 @@ const Create = () => {
     img: "",
     types: [""]
   });
-  // const [types, setTypes] = useState<string[]>([]);
   const handleDatos = (e: ChangeEvent<HTMLInputElement>): void => {
     setDatos({
         ...datos,
@@ -34,11 +35,9 @@ const Create = () => {
     setDatos({
       ...datos,
       types: e.target.value.split(",")
-  })
-    // setTypes(e.target.value.split(","));
-  }
+  })};
+  console.log(datos.types);
   const handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
-    e.preventDefault();
     dispatch(createPokemon(datos))
     setDatos({
       name: "",
@@ -52,37 +51,29 @@ const Create = () => {
       types: [""]
     });
     alert('CHECK IF YOUR POKEMON WAS CREATED !!');
-    navigate.push("/pokedex");
-  }
-  console.log(datos.types)
+    navigate.push("http://localhost:3000/pokedex");
+  };
 
   return (
     <div className="
       w-full 
-      h-screen 
-      flex flex-col items-center
+      flex flex-col items-center 
       md:justify-center"
       >
-      <Button isIconOnly variant="faded" size="sm" as={Link} href="/pokedex" className='absolute top-4 left-4 md:top-12 md:left-14'>
-        <GrLinkPrevious size={20}/>
-      </Button>
-      <h1 className="
-        text-white 
-        text-pretty 
-        font-bold
-        text-3xl
-        pt-20
-        animate-pulse
-        md:text-4xl md:pb-6"
-      >
-          Create your Pokemon
-      </h1>
+      <NavBar/>
+      <NextImage
+        src={title}
+        alt=""
+        width={800}
+        height={500}
+        priority={true}
+        className="px-8 pb-3 pt-9"
+      />
       <form className="
         w-full
-        h-[495px] 
-        py-5 px-4 pt-11
+        px-9
         space-y-10
-        md:w-3/5 md:space-y-6"
+        md:w-3/5 md:space-y-6 md:pt-0 md:px-0"
         onSubmit={(e) => handleSubmit(e)}
       >
         <div className="flex flex-row space-x-4 md:space-x-6 px-4 md:px-0">
@@ -92,7 +83,7 @@ const Create = () => {
             name="name"
             placeholder="Enter the name of your pokemon" 
             size="sm" 
-            className="w-1/2" 
+            className="w-1/2 font-fantasy" 
             isRequired 
             type="text"
             value={datos.name}
@@ -104,7 +95,7 @@ const Create = () => {
             name="img"
             placeholder="Enter the image url" 
             size="sm" 
-            className="w-1/2" 
+            className="w-1/2 font-fantasy" 
             isRequired 
             type="text"
             value={datos.img}
@@ -123,7 +114,7 @@ const Create = () => {
             md:w-1/2 md:space-y-4"
           >
             <div className="flex flex-col">
-              <label className="text-pretty text-white" htmlFor="hp">Hp: {datos.hp}</label>
+              <label className="text-pretty text-white font-fantasy" htmlFor="hp">Hp: {datos.hp}</label>
               <input
                 type="range" 
                 value={datos.hp}
@@ -131,11 +122,12 @@ const Create = () => {
                 min="0" 
                 max="200"
                 id="hp"
+                className="font-fantasy"
                 onChange={handleDatos} 
               />
             </div>  
             <div className="flex flex-col">
-              <label className="text-pretty text-white" htmlFor="attack">Attack: {datos.attack}</label>
+              <label className="text-pretty text-white font-fantasy" htmlFor="attack">Attack: {datos.attack}</label>
               <input
                 type="range" 
                 value={datos.attack}
@@ -143,11 +135,12 @@ const Create = () => {
                 min="0" 
                 max="200"
                 id="attack"
+                className="font-fantasy"
                 onChange={handleDatos} 
               />
             </div>
             <div className="flex flex-col">
-              <label className="text-pretty text-white" htmlFor="defense">Defense: {datos.defense}</label>
+              <label className="text-pretty text-white font-fantasy" htmlFor="defense">Defense: {datos.defense}</label>
               <input
                 type="range" 
                 value={datos.defense}
@@ -155,11 +148,12 @@ const Create = () => {
                 min="0" 
                 max="200"
                 id="defense"
+                className="font-fantasy"
                 onChange={handleDatos} 
               />
             </div>
             <div className="flex flex-col">
-              <label className="text-pretty text-white" htmlFor="speed">Speed: {datos.speed}</label>
+              <label className="text-pretty text-white font-fantasy" htmlFor="speed">Speed: {datos.speed}</label>
               <input
                 type="range" 
                 value={datos.speed}
@@ -167,11 +161,12 @@ const Create = () => {
                 min="0" 
                 max="200"
                 id="speed"
+                className="font-fantasy"
                 onChange={handleDatos} 
               />
             </div>
             <div className="flex flex-col">
-              <label className="text-pretty text-white" htmlFor="hp">Height: {datos.height}</label>
+              <label className="text-pretty text-white font-fantasy" htmlFor="hp">Height: {datos.height}</label>
               <input
                 type="range" 
                 value={datos.height}
@@ -179,11 +174,12 @@ const Create = () => {
                 min="0" 
                 max="200"
                 id="height"
+                className="font-fantasy"
                 onChange={handleDatos} 
               />
             </div>
             <div className="flex flex-col">
-              <label className="text-pretty text-white" htmlFor="weight">Weight: {datos.weight}</label>
+              <label className="text-pretty text-white font-fantasy" htmlFor="weight">Weight: {datos.weight}</label>
               <input
                 type="range" 
                 value={datos.weight}
@@ -191,6 +187,7 @@ const Create = () => {
                 min="0" 
                 max="200"
                 id="weight"
+                className="font-fantasy"
                 onChange={handleDatos} 
               />
             </div>
@@ -207,6 +204,7 @@ const Create = () => {
               size="sm"
               isRequired
               onChange={handleTypes}
+              className="font-fantasy"
             >
             {mytypes?.map(type => {
                 return (
@@ -218,13 +216,13 @@ const Create = () => {
             </Select>
           </div>
         </div>
-        <div className="flex justify-center pb-2">
+        <div className="flex justify-center pb-4">
           <Button
             type="submit"
             size="md"
             variant="faded"
             color="default" 
-            className="text-pretty font-bold"
+            className="font-fantasy font-bold"
           >
             Create
           </Button>

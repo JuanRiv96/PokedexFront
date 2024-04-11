@@ -22,7 +22,7 @@ export const Paginado: FC<PagiProps> = ({ pokemonsPerPage, pokeLength, paginado,
         variant="bordered"
         color="primary"
         className="
-            pt-7
+            pt-7 font-fantasy
             flex justify-center
             container mx-auto
             md:pt-6 md:mt-6"

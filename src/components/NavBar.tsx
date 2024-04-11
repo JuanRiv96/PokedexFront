@@ -1,9 +1,8 @@
-import { Navbar, NavbarContent, NavbarItem, Link, Input } from "@nextui-org/react";
-import NextImage from "next/image";
-import pokebola from "../../public/pokebola.png";
+"use client"
+import { Navbar, NavbarContent, NavbarItem, Link, Input, Button } from "@nextui-org/react";
+import { RiArrowGoBackFill } from "react-icons/ri";
 
 export const NavBar = () => {
- 
   return (
     <Navbar
      classNames={{
@@ -20,25 +19,14 @@ export const NavBar = () => {
         "container",
         "min-w-full",
         "px-5",
-        "md:px-24"
+        "md:px-24",
       ]
      }} 
     >
-       <NavbarContent justify="start"> 
-        <span className="text-pretty text-white text-lg md:text-xl">Pokedex</span>
-        <NextImage
-          className="w-8 h-8 md:w-12 md:h-12"
-          width={0}
-          height={0}
-          alt="Not Found" 
-          src={pokebola} 
-          priority={true}
-        />
-      </NavbarContent>
-      <NavbarContent justify="end">
-        <NavbarItem>
-          <Input type="text" placeholder="Search pokemon" id="SerchBar" radius="lg" className="w-32 md:w-40"/>
-        </NavbarItem>
+      <NavbarContent justify="start" className="flex flex-row"> 
+       <Button as={Link} isIconOnly href="/pokedex" radius="lg" variant="faded" className="font-fantasy">
+          <RiArrowGoBackFill size={20}/>
+        </Button>
       </NavbarContent>
     </Navbar>
   );

@@ -4,8 +4,9 @@ import NextImage from "next/image";
 import { getDetail } from '@/actions';
 import { useAppDispatch, useAppSelector } from '@/hooks';
 import { useEffect } from "react";
-import { Button, Link } from "@nextui-org/react";
-import { GrLinkPrevious } from "react-icons/gr";
+import { Spinner } from "@nextui-org/react";
+import { NavBar } from '@/components/NavBar';
+import title from "../../../../public/detailTitle.png";
 
 interface DetailParams {
   params: { id: string }
@@ -20,10 +21,16 @@ const Detail = ({ params }: DetailParams) => {
   },[dispatch, params.id]);
 
   return (
-    <div className="h-screen flex flex-col justify-center items-center">
-      <Button isIconOnly variant="faded" as={Link} href="/pokedex" className='absolute top-8 left-11 md:top-12 md:left-14'>
-        <GrLinkPrevious size={20}/>
-      </Button>
+    <div className="w-full flex flex-col items-center">
+      <NavBar/>
+      <NextImage
+        src={title}
+        alt="Not Found"
+        width={600}
+        height={100}
+        priority={true}
+        className="px-8 pb-3 pt-9 md:px-0"
+      />
       <PokemonDetail 
         id={detail?.id} 
         name={detail?.name} 
@@ -38,23 +45,27 @@ const Detail = ({ params }: DetailParams) => {
       />
       <div className="w-[580px] hidden md:block md:flex md:flex-row md:justify-center md:border md:rounded-2xl md:shadow md:shadow-white md:space-x-5">
         <div className='w-72 h-[350px]'>
-          <h3 className="text-pretty text-white text-2xl px-4 pt-2">{`${detail?.name}`}</h3>
-          <div className="flex justify-center">
-            <NextImage 
-              src={detail?.img} 
-              alt="" 
-              priority={true}
-              width={250}
-              height={250}
-            />
+          <h3 className="font-fantasy text-white text-2xl px-4 pt-2">{`${detail?.name}`}</h3>
+          <div className="flex flex-row justify-center items-center h-[250px]">
+            {detail.id ? 
+              <NextImage 
+                src={detail?.img} 
+                alt="Not Found" 
+                priority={true}
+                width={250}
+                height={250}
+              />
+              :
+              <Spinner size="lg" color="default"/>
+            }
           </div>
-          <span className="flex justify-center text-pretty text-white text-base pt-4">{detail?.types?.join(', ')}</span>
+          <span className="flex justify-center font-fantasy text-white text-base pt-4">{detail?.types?.join(', ')}</span>
         </div>
       
         <div className="w-72 h-[350px] px-4">
-          <h3 className="flex justify-center pt-2 text-white text-2xl">Stats</h3>
+          <h3 className="flex justify-center pt-2 text-white text-2xl font-fantasy">Stats</h3>
           <div className="pt-5">
-            <label id="hp" className="text-pretty text-white text-sm">
+            <label id="hp" className="font-fantasy text-white text-sm">
               Hp: {detail?.hp}
               <div className="w-full bg-black rounded-full h-2.5" id="hp">
                 <div className="bg-white h-2.5 rounded-full" style={{width: `${Number(detail?.hp) > 100 ? "100" : detail.hp}%`}}/>
@@ -62,7 +73,7 @@ const Detail = ({ params }: DetailParams) => {
             </label>
           </div>
           <div className="pt-3">
-            <label id="attack" className="text-pretty text-white text-sm">
+            <label id="attack" className="font-fantasy text-white text-sm">
               Attack: {detail?.attack}
               <div className="w-full bg-black rounded-full h-2.5" id="attack">
                 <div className="bg-white h-2.5 rounded-full" style={{width: `${Number(detail?.attack) > 100 ? "100" : detail.attack}%`}}/>
@@ -70,7 +81,7 @@ const Detail = ({ params }: DetailParams) => {
             </label>
           </div>
           <div className="pt-3">
-            <label id="defense" className="text-pretty text-white text-sm">
+            <label id="defense" className="font-fantasy text-white text-sm">
               Defense: {detail?.defense}
               <div className="w-full bg-black rounded-full h-2.5" id="defense">
                 <div className="bg-white h-2.5 rounded-full" style={{width: `${Number(detail?.defense) > 100 ? "100" : detail.defense}%`}}/>
@@ -78,7 +89,7 @@ const Detail = ({ params }: DetailParams) => {
             </label>
           </div>
           <div className="pt-3">
-            <label id="speed" className="text-pretty text-white text-sm">
+            <label id="speed" className="font-fantasy text-white text-sm">
               Speed: {detail?.speed}
               <div className="w-full bg-black rounded-full h-2.5" id="speed">
                 <div className="bg-white h-2.5 rounded-full" style={{width: `${Number(detail?.speed) > 100 ? "100" : detail.speed}%`}}/>
@@ -86,7 +97,7 @@ const Detail = ({ params }: DetailParams) => {
             </label>
           </div>
           <div className="pt-3">
-            <label id="height" className="text-pretty text-white text-sm">
+            <label id="height" className="font-fantasy text-white text-sm">
               Height: {detail?.height}
               <div className="w-full bg-black rounded-full h-2.5" id="height">
                 <div className="bg-white h-2.5 rounded-full" style={{width: `${Number(detail?.height) > 100 ? "100" : detail.height}%`}}/>
@@ -94,7 +105,7 @@ const Detail = ({ params }: DetailParams) => {
             </label>
           </div>
           <div className="pt-3">
-            <label id="weight" className="text-pretty text-white text-sm">
+            <label id="weight" className="font-fantasy text-white text-sm">
               Attack: {detail?.weight}
               <div className="w-full bg-black rounded-full h-2.5" id="weight">
                 <div className="bg-white h-2.5 rounded-full" style={{width: `${Number(detail?.weight) > 100 ? "100" : detail.weight}%`}}/>
@@ -103,7 +114,6 @@ const Detail = ({ params }: DetailParams) => {
           </div>
         </div>
       </div>
-     
     </div>
   )
 };

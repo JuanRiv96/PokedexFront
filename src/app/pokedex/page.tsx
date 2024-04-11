@@ -1,57 +1,142 @@
 "use client"
 import { useAppDispatch, useAppSelector } from '@/hooks';
-import { ChangeEvent, useEffect, useState } from 'react';
-import { getPokemons, getPokemonsByStatus } from '@/actions';
+import { ChangeEvent, useEffect, useState, MouseEvent } from 'react';
+import { getPokemons, getPokemonFilter } from '@/actions';
 import { PokemonCard }  from '@/components/PokemonCard';
 import { NavBar } from '@/components/NavBar';
 import { Paginado } from '@/components/Paginado';
-import {Select, SelectItem, Pagination} from "@nextui-org/react";
+import {Select, SelectItem, Button, Navbar, NavbarContent, NavbarItem, Link, Input, } from "@nextui-org/react";
+import { searchPokemon } from "@/actions";
+import { GrSearch } from "react-icons/gr";
+import { RiArrowGoBackFill } from "react-icons/ri";
 
-const filters: string[] = ["All", "Created", "Original"];
-const orders: string[] = ["None","A-Z", "Z-A", "Attack"];
-const types: string[] = ["None", "normal", "fighting", "flying", "poison", "ground", "rock", "bug", "ghost", "steel", "fire", "water", "grass", "electric", "psychic", "ice", "dragon", "dark", "fairy", "unknown", "shadow"];
-
+const filters: string[] = ["All","Original", "Created"];
+const orders: string[] = ["None","A-Z", "Z-A"];
+const types: string[] = [
+  "None", "normal", "fighting", "flying", 
+  "poison", "ground", "rock", "bug", 
+  "ghost", "steel", "fire", "water", 
+  "grass", "electric", "psychic", "ice", 
+  "dragon", "dark", "fairy", "unknown", 
+  "shadow"
+];
 
 const Pokedex = () => {
   
   const dispatch = useAppDispatch();
   const pokemons = useAppSelector((state) => state?.pokemons.pokemons);
+  const [name, setName] = useState("");
+  const [reset, setReset] = useState(false);
+  const [filtro, setStatus] = useState({
+    status: "All",
+    order: "None",
+    poketypes: "None"
+  });
   const pokemonsPerPage: number = 12;
   const [ currentPage, setCurrentPage ] = useState<number>(1);
   const indexLastPokemon: number = currentPage * pokemonsPerPage;
   const indexFirstPokemon: number = indexLastPokemon - pokemonsPerPage;
   const currentPokemons = pokemons.slice(indexFirstPokemon, indexLastPokemon);
-  const [pageNumbers, setPageNumbers] = useState<number[]>([]);
 
   useEffect(() => {
     dispatch(getPokemons());
   },[dispatch]);
 
-  const handleTypes = (e: ChangeEvent<HTMLSelectElement>) => {
-    console.log(e.target.value);
-    dispatch(getPokemonsByStatus(e.target.value));
+  const handleStatus = (e: ChangeEvent<HTMLSelectElement>): void =>{
+    setStatus({
+      ...filtro,
+      [e.target.name]: e.target.value
+    });
+  };
+  const applyFiltro = (e: MouseEvent<HTMLButtonElement>): void => {
+    e.preventDefault();
+    dispatch(getPokemonFilter(filtro));
     setCurrentPage(1);
+  };
+  const handleName = (e: ChangeEvent<HTMLInputElement>): void => {
+    e.preventDefault();
+    setName(e.target.value);
   }
+  const submitSearch = (e: MouseEvent<HTMLButtonElement>): void => {
+    e.preventDefault();
+    setReset(true);
+    dispatch(searchPokemon(name));
+  };
 
   return (
-    <div className="w-full">
-      <NavBar/>
+    <div>
+      <Navbar
+     classNames={{
+      base:[
+        "w-full",
+        "bg-transparent",
+        "border-b-[1px]",
+        "border-white",
+        "top-0",
+        "z-50",
+        "shadow"
+      ],
+      wrapper:[
+        "container",
+        "min-w-full",
+        "px-5",
+        "md:px-24",
+      ]
+     }} 
+    >
+       <NavbarContent justify="start" className="flex flex-row"> 
+        <Input 
+          type="text" 
+          placeholder="Search pokemon" 
+          id="SerchBar" 
+          radius="lg"
+          autoComplete="off"
+          className="w-[128px] font-fantasy" 
+          classNames={{
+            inputWrapper: [
+              "h-10"
+            ]}}
+          onChange={(e) => handleName(e)}
+        />
+        {name ? 
+          <Button radius="full" variant="faded" size="sm" isIconOnly onClick={(e) => submitSearch(e)} className="font-fantasy">
+            <GrSearch size={20}/>
+          </Button>
+          :
+          null
+        }
+      </NavbarContent>
+      <NavbarContent justify="end">
+        <NavbarItem>
+          {reset ?
+            <Button as={Link} isIconOnly href="/pokedex" radius="lg" variant="faded" className="font-fantasy">
+              <RiArrowGoBackFill size={20}/>
+            </Button>
+            :
+            <Button as={Link} href="/create" radius="lg" variant="faded" className="font-fantasy">
+             Create
+            </Button>
+          }
+        </NavbarItem>
+      </NavbarContent>
+      </Navbar>
       <div className="
         px-5
         w-full
         pt-9 
         space-x-5
-        flex justify-center 
+        flex justify-center items-center
         md:px-2"
       >
         <Select 
-          name="Pokemons" 
+          name="status" 
           id="Pokemons" 
           label="Pokemons" 
           defaultSelectedKeys={["All"]}
-          className="w-32 text-black"
+          className="w-32 text-black font-fantasy"
           radius="lg"
           size="sm" 
+          isDisabled={reset ? true : false}
           color="default" 
           variant="faded" 
           classNames={{
@@ -59,6 +144,7 @@ const Pokedex = () => {
               "text-black"
             ]
           }}
+          onChange={(e) => handleStatus(e)}
         >
             {filters.map(fil => {
               return (
@@ -69,13 +155,14 @@ const Pokedex = () => {
             })}
         </Select>
         <Select 
-          name="Order" 
+          name="order" 
           id="Order" 
           label="Order" 
           defaultSelectedKeys={["None"]} 
-          className="w-32 text-black"
+          className="w-32 text-black font-fantasy"
           radius="lg"
           size="sm" 
+          isDisabled={reset ? true : false}
           color="default" 
           variant="faded"
           classNames={{
@@ -83,6 +170,7 @@ const Pokedex = () => {
               "text-black"
             ]
           }}
+          onChange={(e) => handleStatus(e)}
           >
             {orders.map(ord => {
               return (
@@ -93,13 +181,14 @@ const Pokedex = () => {
             })}
         </Select>
         <Select 
-          name="Types" 
+          name="poketypes" 
           id="Types" 
           label="Types" 
           defaultSelectedKeys={["None"]} 
-          className="w-32 text-black"
+          className="w-32 text-black font-fantasy"
           radius="lg"
-          size="sm" 
+          size="sm"
+          isDisabled={reset ? true : false}
           color="default" 
           variant="faded"
           classNames={{
@@ -107,7 +196,7 @@ const Pokedex = () => {
               "text-black"
             ]
           }}
-          onChange = {(e) => handleTypes(e)}
+          onChange = {(e) => handleStatus(e)}
         >
             {types.map(type => {
               return (
@@ -116,7 +205,17 @@ const Pokedex = () => {
                 </SelectItem>
               )
             })}
-        </Select> 
+        </Select>
+        <Button
+          variant="faded"
+          radius="lg"
+          size="sm"
+          isDisabled={reset ? true : false}
+          onClick={(e) => applyFiltro(e)}
+          className="block font-fantasy text-sm"
+        >
+          Filter
+        </Button>
       </div>
       <div className="
         w-full
@@ -142,20 +241,6 @@ const Pokedex = () => {
           })}
       </div>
       <Paginado pokemonsPerPage = {pokemonsPerPage} pokeLength = {pokemons.length} paginado ={setCurrentPage} page={currentPage} />
-       {/* {pageNumbers.length === 0 ? null 
-        : 
-        <Pagination   
-          total={pageNumbers.length}
-          variant="bordered"
-          color="primary"
-          page={currentPage}
-          onChange={setCurrentPage}
-          className="
-            pt-10 mt-4 
-            flex justify-center
-            container mx-auto"
-        />
-      }      */}
     </div>
   )
 };

@@ -1,5 +1,10 @@
 import axios from "axios";
-import { getAllPokemons, getPokemonDetail, filterPokemon } from "@/reducer";
+import {
+  getAllPokemons,
+  getPokemonDetail,
+  filterPokemon,
+  getPokemonByName,
+} from "@/reducer";
 import { AppDispatch } from "@/store";
 import { Pokemons, PokeCreate } from "@/interfaces";
 
@@ -23,6 +28,19 @@ export const getDetail = (id: string) => async (dispatch: AppDispatch) => {
   }
 };
 
+export const searchPokemon =
+  (name: string) => async (dispatch: AppDispatch) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:3001/pokedex?name=${name}`
+      );
+      const pokemon: Pokemons = response.data.data;
+      return dispatch(getPokemonByName(pokemon));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
 export const createPokemon = (values: PokeCreate) => {
   return async function () {
     try {
@@ -37,21 +55,10 @@ export const createPokemon = (values: PokeCreate) => {
   };
 };
 
-export const getPokemonsByStatus =
-  (value: string) => async (dispatch: AppDispatch) => {
-    return dispatch(filterPokemon(value));
+//////////////////////////////// Filtro/////////////////////////////////////
+
+export const getPokemonFilter =
+  (values: { status: string; order: string; poketypes: string }) =>
+  async (dispatch: AppDispatch) => {
+    return dispatch(filterPokemon(values));
   };
-
-// export const getPokemonByOrder = (value) => {
-//   return {
-//       type: FILTER_BY_ORDER,
-//       payload: value
-//   }
-// };
-
-// export const getPokemonsByType = (value) => {
-//   return {
-//       type: FILTER_BY_TYPE,
-//       payload: value
-//   }
-// }
