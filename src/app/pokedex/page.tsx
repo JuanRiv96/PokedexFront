@@ -5,7 +5,7 @@ import { getPokemons, getPokemonFilter } from '@/actions';
 import { PokemonCard }  from '@/components';
 import { Paginado } from '@/components';
 import {Select, SelectItem, Button, Navbar, NavbarContent, NavbarItem, Link, Input, } from "@nextui-org/react";
-import { searchPokemon, getTypes } from "@/actions";
+import { searchPokemon } from "@/actions";
 import { GrSearch } from "react-icons/gr";
 import { RiArrowGoBackFill } from "react-icons/ri";
 
@@ -39,7 +39,6 @@ const Pokedex = () => {
 
   useEffect(() => {
     dispatch(getPokemons());
-    dispatch(getTypes());
   },[dispatch]);
 
   const handleStatus = (e: ChangeEvent<HTMLSelectElement>): void =>{

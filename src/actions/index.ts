@@ -10,7 +10,9 @@ import { Pokemons, PokeCreate } from "@/interfaces";
 
 export const getPokemons = () => async (dispatch: AppDispatch) => {
   try {
-    const response = await axios.get(`http://localhost:3001/pokedex`);
+    const response = await axios.get(
+      `https://pokedex-production-d9a1.up.railway.app/pokedex`
+    );
     const pokemons = response.data.data;
     return dispatch(getAllPokemons(pokemons));
   } catch (error) {
@@ -20,7 +22,9 @@ export const getPokemons = () => async (dispatch: AppDispatch) => {
 
 export const getDetail = (id: string) => async (dispatch: AppDispatch) => {
   try {
-    const response = await axios.get(`http://localhost:3001/pokedex/${id}`);
+    const response = await axios.get(
+      `https://pokedex-production-d9a1.up.railway.app/pokedex/${id}`
+    );
     const pokemons: Pokemons = response.data.data;
     return dispatch(getPokemonDetail(pokemons));
   } catch (error) {
@@ -32,7 +36,7 @@ export const searchPokemon =
   (name: string) => async (dispatch: AppDispatch) => {
     try {
       const response = await axios.get(
-        `http://localhost:3001/pokedex?name=${name}`
+        `https://pokedex-production-d9a1.up.railway.app/pokedex?name=${name}`
       );
       const pokemon: Pokemons = response.data.data;
       return dispatch(getPokemonByName(pokemon));
@@ -45,7 +49,7 @@ export const createPokemon = (values: PokeCreate) => {
   return async function () {
     try {
       const response = await axios.post(
-        "http://localhost:3001/pokedex/create",
+        "https://pokedex-production-d9a1.up.railway.app/pokedex/create",
         values
       );
       return response;
@@ -55,16 +59,6 @@ export const createPokemon = (values: PokeCreate) => {
   };
 };
 
-export const getTypes = () => {
-  return async function () {
-    try {
-      const response = await axios.get("http://localhost:3001/types");
-      return response;
-    } catch (error) {
-      console.log(error);
-    }
-  };
-};
 //////////////////////////////// Filtro/////////////////////////////////////
 
 export const getPokemonFilter =
