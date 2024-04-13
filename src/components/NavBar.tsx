@@ -1,5 +1,5 @@
 "use client"
-import { Navbar, NavbarContent, NavbarItem, Link, Input, Button } from "@nextui-org/react";
+import { Navbar, NavbarContent, Link, Button } from "@nextui-org/react";
 import { RiArrowGoBackFill } from "react-icons/ri";
 
 export const NavBar = () => {

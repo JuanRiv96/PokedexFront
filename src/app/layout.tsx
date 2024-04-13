@@ -1,9 +1,6 @@
-"use client"
 import "./globals.css";
 import type { Metadata } from 'next'
-import store from '@/store'
-import { Provider } from 'react-redux';
-import {NextUIProvider} from '@nextui-org/react'
+import { Providers } from "./providers";
 
 export const metadata: Metadata = {
   title: 'Pokedex App',
@@ -18,11 +15,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <NextUIProvider>
-          <Provider store={store}>
-            {children}
-          </Provider>
-        </NextUIProvider>
+        <Providers>
+          {children}
+        </Providers>
       </body>
     </html>
   )

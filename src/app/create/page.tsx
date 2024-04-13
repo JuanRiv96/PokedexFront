@@ -4,7 +4,7 @@ import { useAppDispatch } from "@/hooks";
 import { createPokemon } from "@/actions";
 import { useRouter } from "next/navigation";
 import { Select, SelectItem, Button, Input, Link} from "@nextui-org/react";
-import { NavBar } from '@/components/NavBar';
+import { NavBar } from "@/components";
 import NextImage from "next/image";
 import title from "../../../public/createTitle.png";
 

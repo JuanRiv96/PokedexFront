@@ -25,7 +25,7 @@ export interface PagiProps {
   pokemonsPerPage: number;
   pokeLength: number;
   paginado: (pageNum: number) => void;
-  page: number;
+  mypage: number;
 }
 
 export interface StateOne {

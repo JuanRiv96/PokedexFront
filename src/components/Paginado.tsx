@@ -1,9 +1,9 @@
 "use client"
 import { useState, useEffect, FC } from "react";
-import {Pagination} from "@nextui-org/react";
+import {Pagination, divider} from "@nextui-org/react";
 import {PagiProps} from "@/interfaces";
 
-export const Paginado: FC<PagiProps> = ({ pokemonsPerPage, pokeLength, paginado, page }) => {
+export const Paginado: FC<PagiProps> = ({ pokemonsPerPage, pokeLength, paginado, mypage }) => {
 
     const [pageNumbers, setPageNumbers] = useState<number[]>([]);
     useEffect(() => {
@@ -16,16 +16,16 @@ export const Paginado: FC<PagiProps> = ({ pokemonsPerPage, pokeLength, paginado,
 
   return (
     <Pagination
-        total={pageNumbers.length}
-        page={page}
-        onChange={paginado}
-        variant="bordered"
-        color="primary"
-        className="
-            pt-7 font-fantasy
-            flex justify-center
-            container mx-auto
-            md:pt-6 md:mt-6"
+      total={pageNumbers.length}
+      page={mypage}
+      onChange={paginado}
+      variant="flat"
+      color="primary"
+      className="
+          pt-7 font-fantasy
+          flex justify-center
+          container mx-auto
+          md:pt-6 md:mt-6"
     />
   )
 }

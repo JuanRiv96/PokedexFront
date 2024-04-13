@@ -2,10 +2,10 @@
 import { useAppDispatch, useAppSelector } from '@/hooks';
 import { ChangeEvent, useEffect, useState, MouseEvent } from 'react';
 import { getPokemons, getPokemonFilter } from '@/actions';
-import { PokemonCard }  from '@/components/PokemonCard';
-import { Paginado } from '@/components/Paginado';
+import { PokemonCard }  from '@/components';
+import { Paginado } from '@/components';
 import {Select, SelectItem, Button, Navbar, NavbarContent, NavbarItem, Link, Input, } from "@nextui-org/react";
-import { searchPokemon } from "@/actions";
+import { searchPokemon, getTypes } from "@/actions";
 import { GrSearch } from "react-icons/gr";
 import { RiArrowGoBackFill } from "react-icons/ri";
 
@@ -39,6 +39,7 @@ const Pokedex = () => {
 
   useEffect(() => {
     dispatch(getPokemons());
+    dispatch(getTypes());
   },[dispatch]);
 
   const handleStatus = (e: ChangeEvent<HTMLSelectElement>): void =>{
@@ -239,7 +240,7 @@ const Pokedex = () => {
             );
           })}
       </div>
-      <Paginado pokemonsPerPage = {pokemonsPerPage} pokeLength = {pokemons.length} paginado ={setCurrentPage} page={currentPage} />
+      <Paginado pokemonsPerPage = {pokemonsPerPage} pokeLength = {pokemons.length} paginado ={setCurrentPage} mypage={currentPage} />
     </div>
   )
 };

@@ -1,11 +1,11 @@
 "use client"
-import { PokemonDetail } from '@/components/PokemonDetail';
+import { PokemonDetail } from "@/components";
 import NextImage from "next/image";
-import { getDetail } from '@/actions';
-import { useAppDispatch, useAppSelector } from '@/hooks';
+import { getDetail } from "@/actions";
+import { useAppDispatch, useAppSelector } from "@/hooks";
 import { useEffect } from "react";
 import { Spinner } from "@nextui-org/react";
-import { NavBar } from '@/components/NavBar';
+import { NavBar } from "@/components";
 import title from "../../../../public/detailTitle.png";
 
 interface DetailParams {
