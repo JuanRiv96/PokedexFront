@@ -1,13 +1,22 @@
 "use client"
+import { useEffect } from 'react';
+import { useAppDispatch } from '@/hooks';
 import titulo from "../../public/Pokemon3.webp";
 import pokedexImg from "../../public/pokedex-img.webp";
 import detail from "../../public/Detail.webp";
 import create from "../../public/Create.webp";
 import pokebola from "../../public/pokebola.png";
 import NextImage  from "next/image";
+import { getTypes } from "@/actions";
 import { Button, Link, Navbar, NavbarContent, NavbarItem } from "@nextui-org/react";
 
  const Home = () => {
+  
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(getTypes());
+  },[dispatch]);
+
   return (
     <div className="flex flex-col justify-center items-center space-y-14">
       <Navbar

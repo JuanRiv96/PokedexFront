@@ -55,6 +55,16 @@ export const createPokemon = (values: PokeCreate) => {
   };
 };
 
+export const getTypes = () => {
+  return async function () {
+    try {
+      const response = await axios.get("http://localhost:3001/types");
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
 //////////////////////////////// Filtro/////////////////////////////////////
 
 export const getPokemonFilter =

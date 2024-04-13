@@ -1,5 +1,5 @@
 "use client"
-import { useState, ChangeEvent, SyntheticEvent } from "react";
+import { useState, ChangeEvent, FormEvent } from "react";
 import { useAppDispatch } from "@/hooks";
 import { createPokemon } from "@/actions";
 import { useRouter } from "next/navigation";
@@ -8,12 +8,19 @@ import { NavBar } from '@/components/NavBar';
 import NextImage from "next/image";
 import title from "../../../public/createTitle.png";
 
-const mytypes: string[] = ["none", "normal", "fighting", "flying", "poison", "ground", "rock", "bug", "ghost", "steel", "fire", "water", "grass", "electric", "psychic", "ice", "dragon", "dark", "fairy", "unknown", "shadow"];
+const mytypes: string[] = [
+  "None", "normal", "fighting", "flying", 
+  "poison", "ground", "rock", "bug", 
+  "ghost", "steel", "fire", "water", 
+  "grass", "electric", "psychic", "ice", 
+  "dragon", "dark", "fairy", "unknown", 
+  "shadow"
+];
 
 const Create = () => {
 
   const dispatch = useAppDispatch();
-  const navigate = useRouter()
+  const router = useRouter()
   const [datos, setDatos] = useState({
     name: "",
     hp: "",
@@ -36,8 +43,8 @@ const Create = () => {
       ...datos,
       types: e.target.value.split(",")
   })};
-  console.log(datos.types);
-  const handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     dispatch(createPokemon(datos))
     setDatos({
       name: "",
@@ -50,8 +57,8 @@ const Create = () => {
       img: "",
       types: [""]
     });
-    alert('CHECK IF YOUR POKEMON WAS CREATED !!');
-    navigate.push("http://localhost:3000/pokedex");
+    alert("YOUR POKEMON WAS CREATED !!");
+    router.push("/pokedex");
   };
 
   return (
@@ -82,7 +89,8 @@ const Create = () => {
             id="Name"
             name="name"
             placeholder="Enter the name of your pokemon" 
-            size="sm" 
+            size="sm"
+            autoComplete="off"
             className="w-1/2 font-fantasy" 
             isRequired 
             type="text"
@@ -94,7 +102,8 @@ const Create = () => {
             id="img"
             name="img"
             placeholder="Enter the image url" 
-            size="sm" 
+            size="sm"
+            autoComplete="off"
             className="w-1/2 font-fantasy" 
             isRequired 
             type="text"

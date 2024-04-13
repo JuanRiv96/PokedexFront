@@ -140,7 +140,7 @@ const pokemonsSlice = createSlice({
           action.payload.poketypes === "None"
         ) {
           const originalPokemons = state.pokemons.filter(
-            (pokemon) => !pokemon.createdInDb
+            (pokemon) => !pokemon.createdInDB
           );
           state.pokemons = originalPokemons;
           return;
@@ -149,7 +149,7 @@ const pokemonsSlice = createSlice({
           action.payload.poketypes
         ) {
           const originalPokemons = state.pokemons
-            .filter((pokemon) => !pokemon.createdInDb)
+            .filter((pokemon) => !pokemon.createdInDB)
             .filter((pokemon) =>
               pokemon.types.includes(action.payload.poketypes)
             );
@@ -160,7 +160,7 @@ const pokemonsSlice = createSlice({
           action.payload.poketypes === "None"
         ) {
           const originalPokemons = state.pokemons
-            .filter((pokemon) => !pokemon.createdInDb)
+            .filter((pokemon) => !pokemon.createdInDB)
             .sort((a, b) => {
               if (a.name > b.name) {
                 return 1;
@@ -231,7 +231,7 @@ const pokemonsSlice = createSlice({
           action.payload.poketypes === "None"
         ) {
           const createdPokemons = state.pokemons.filter(
-            (pokemon) => pokemon.createdInDb
+            (pokemon) => pokemon.createdInDB
           );
           state.pokemons = createdPokemons;
           return;
@@ -240,7 +240,7 @@ const pokemonsSlice = createSlice({
           action.payload.poketypes
         ) {
           const createdPokemons = state.pokemons
-            .filter((pokemon) => pokemon.createdInDb)
+            .filter((pokemon) => pokemon.createdInDB)
             .filter((pokemon) =>
               pokemon.types.includes(action.payload.poketypes)
             );
@@ -250,19 +250,22 @@ const pokemonsSlice = createSlice({
           action.payload.order === "A-Z" &&
           action.payload.poketypes === "None"
         ) {
-          const filterpokemons = state.pokemons.sort((a, b) => {
-            if (a.name > b.name) {
-              return 1;
-            }
-            if (b.name > a.name) {
-              return -1;
-            }
-            return 0;
-          });
+          const filterpokemons = state.pokemons
+            .filter((pokemon) => pokemon.createdInDB)
+            .sort((a, b) => {
+              if (a.name > b.name) {
+                return 1;
+              }
+              if (b.name > a.name) {
+                return -1;
+              }
+              return 0;
+            });
           state.pokemons = filterpokemons;
           return;
         } else if (action.payload.order === "A-Z" && action.payload.poketypes) {
           const filterpokemons = state.pokemons
+            .filter((pokemon) => pokemon.createdInDB)
             .filter((pokemon) =>
               pokemon.types.includes(action.payload.poketypes)
             )
@@ -281,19 +284,22 @@ const pokemonsSlice = createSlice({
           action.payload.order === "Z-A" &&
           action.payload.poketypes === "None"
         ) {
-          const filterpokemons = state.pokemons.sort((a, b) => {
-            if (a.name > b.name) {
-              return 1;
-            }
-            if (b.name > a.name) {
-              return -1;
-            }
-            return 0;
-          });
+          const filterpokemons = state.pokemons
+            .filter((pokemon) => pokemon.createdInDB)
+            .sort((a, b) => {
+              if (a.name > b.name) {
+                return 1;
+              }
+              if (b.name > a.name) {
+                return -1;
+              }
+              return 0;
+            });
           state.pokemons = filterpokemons;
           return;
         } else if (action.payload.order === "Z-A" && action.payload.poketypes) {
           const filterpokemons = state.pokemons
+            .filter((pokemon) => pokemon.createdInDB)
             .filter((pokemon) =>
               pokemon.types.includes(action.payload.poketypes)
             )

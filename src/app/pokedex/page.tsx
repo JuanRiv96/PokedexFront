@@ -3,7 +3,6 @@ import { useAppDispatch, useAppSelector } from '@/hooks';
 import { ChangeEvent, useEffect, useState, MouseEvent } from 'react';
 import { getPokemons, getPokemonFilter } from '@/actions';
 import { PokemonCard }  from '@/components/PokemonCard';
-import { NavBar } from '@/components/NavBar';
 import { Paginado } from '@/components/Paginado';
 import {Select, SelectItem, Button, Navbar, NavbarContent, NavbarItem, Link, Input, } from "@nextui-org/react";
 import { searchPokemon } from "@/actions";

@@ -9,17 +9,17 @@ export interface Pokemons {
   speed: string;
   height: string;
   weight: string;
-  createdInDb: boolean;
+  createdInDB: boolean;
 }
 
-export type Detail = Omit<Pokemons, "createdInDb">;
+export type Detail = Omit<Pokemons, "createdInDB">;
 
 export type PokeCard = Omit<
   Pokemons,
-  "hp" | "defense" | "speed" | "height" | "weight" | "createdInDb"
+  "hp" | "defense" | "speed" | "height" | "weight" | "createdInDB"
 >;
 
-export type PokeCreate = Omit<Pokemons, "id" | "createdInDb">;
+export type PokeCreate = Omit<Pokemons, "id" | "createdInDB">;
 
 export interface PagiProps {
   pokemonsPerPage: number;
