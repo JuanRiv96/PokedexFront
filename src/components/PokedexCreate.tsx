@@ -1,12 +1,9 @@
 "use client"
 import { useState, ChangeEvent, FormEvent } from "react";
-import { useAppDispatch } from "@/hooks";
-import { createPokemon } from "@/actions";
 import { useRouter } from "next/navigation";
-import { Select, SelectItem, Button, Input, Link} from "@nextui-org/react";
-import { NavBar } from "@/components";
-import NextImage from "next/image";
-import title from "../../../public/createTitle.png";
+import { Select, SelectItem, Button, Input } from "@nextui-org/react";
+import { createPokemon } from "@/pokemons/actions/pokemon-actions";
+import  toast  from "react-hot-toast";
 
 const mytypes: string[] = [
   "None", "normal", "fighting", "flying", 
@@ -17,10 +14,8 @@ const mytypes: string[] = [
   "shadow"
 ];
 
-const Create = () => {
-
-  const dispatch = useAppDispatch();
-  const router = useRouter()
+export const PokedexCreate = () => {
+  const router = useRouter();
   const [datos, setDatos] = useState({
     name: "",
     hp: "",
@@ -33,19 +28,20 @@ const Create = () => {
     types: [""]
   });
   const handleDatos = (e: ChangeEvent<HTMLInputElement>): void => {
+    e.preventDefault();
     setDatos({
         ...datos,
         [e.target.name]: e.target.value
     })
-  }
+  };
   const handleTypes = (e: ChangeEvent<HTMLSelectElement>) => {
     setDatos({
       ...datos,
       types: e.target.value.split(",")
   })};
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(createPokemon(datos))
+    const result = await createPokemon(datos);
     setDatos({
       name: "",
       hp: "",
@@ -57,30 +53,23 @@ const Create = () => {
       img: "",
       types: [""]
     });
-    alert("YOUR POKEMON WAS CREATED !!");
-    router.push("/pokedex");
+    if(result?.success !== undefined && result.success) {
+      toast.success(result.message);
+      router.push("/pokedex");
+
+    }else if(result?.success !== undefined && !result.success){
+      toast.error(result.message);
+      router.push("/pokedex");
+    }
   };
 
   return (
-    <div className="
-      w-full 
-      flex flex-col items-center 
-      md:justify-center"
-      >
-      <NavBar/>
-      <NextImage
-        src={title}
-        alt=""
-        width={800}
-        height={500}
-        priority={true}
-        className="px-8 pb-3 pt-9"
-      />
+    <div className="w-full md:w-3/5">
       <form className="
         w-full
         px-9
         space-y-10
-        md:w-3/5 md:space-y-6 md:pt-0 md:px-0"
+        md:space-y-6 md:pt-0 md:px-0"
         onSubmit={(e) => handleSubmit(e)}
       >
         <div className="flex flex-row space-x-4 md:space-x-6 px-4 md:px-0">
@@ -101,7 +90,7 @@ const Create = () => {
             label="Image(URL)" 
             id="img"
             name="img"
-            placeholder="Enter the image url" 
+            placeholder="http..." 
             size="sm"
             autoComplete="off"
             className="w-1/2 font-fantasy" 
@@ -240,5 +229,3 @@ const Create = () => {
     </div>
   )
 };
-
-export default Create;

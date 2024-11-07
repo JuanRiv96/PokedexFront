@@ -5,7 +5,7 @@
 
 body {
   min-height: 100vh;
-  background: radial-gradient(at left bottom, rgba(11, 75, 193, 1.0), rgba(30, 29, 30, 1.0));
+  background-image: linear-gradient(180deg, #4f3f66 0, #3b2e5f 25%, #1f1f59 50%, #001253 75%, #00004e 100%);
 }
 *::-webkit-scrollbar {
   width: 10px;

@@ -1,61 +1,19 @@
-"use client"
+import NextImage  from "next/image";
 import titulo from "../../public/Pokemon3.webp";
 import pokedexImg from "../../public/pokedex-img.webp";
 import detail from "../../public/Detail.webp";
 import create from "../../public/Create.webp";
-import pokebola from "../../public/pokebola.png";
-import NextImage  from "next/image";
-import { Button, Link, Navbar, NavbarContent, NavbarItem } from "@nextui-org/react";
 
 export const Landing = () => {
   return (
-    <div className="flex flex-col justify-center items-center space-y-14">
-        <Navbar
-            classNames={{
-                base:[
-                "w-full",
-                "bg-transparent",
-                "border-b-[1px]",
-                "border-white",
-                "top-0",
-                "z-50",
-                "shadow"
-                ],
-                wrapper:[
-                "container",
-                "min-w-full",
-                "px-5",
-                "md:px-24",
-                ]
-            }} 
-        >
-            <NavbarContent justify="start" className="font-fantasy text-white text-2xl flex flex-row"> 
-                Pokedex 
-                <NextImage
-                    src={pokebola}
-                    alt="Not Found"
-                    width={0}
-                    height={0}
-                    priority={true}
-                    className="w-9 h-9"
-                />
-            </NavbarContent>
-            <NavbarContent justify="end">
-                <NavbarItem>
-                    <Button as={Link} href="/pokedex" radius="lg" variant="faded" className="font-fantasy">
-                        Get Started
-                    </Button>
-                </NavbarItem>
-            </NavbarContent>
-        </Navbar>
+    <div className="flex flex-col justify-center items-center space-y-8">
         <NextImage
             src={titulo}
             alt="Not Found"
             width={0}
             height={0}
-            priority={true}
             className="
-            w-[320px] h-[100px]
+            w-[320px] h-[100px] mt-4
             md:w-[500px] md:h-[150px]"
         />
         <div className="
