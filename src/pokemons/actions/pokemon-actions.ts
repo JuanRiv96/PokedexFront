@@ -7,6 +7,19 @@ import {
 } from "@/interfaces";
 import axios from "axios";
 import { revalidatePath } from "next/cache";
+import z from "zod";
+
+const createSchema = z.object({
+  name: z.string(),
+  img: z.string().url(),
+  types: z.string().array(),
+  hp: z.string(),
+  attack: z.string(),
+  defense: z.string(),
+  speed: z.string(),
+  height: z.string(),
+  weight: z.string(),
+});
 
 export const SearchPokemon = async (name: string) => {
   try {
@@ -50,16 +63,25 @@ export const SearchPokemon = async (name: string) => {
 
 export const createPokemon = async (values: PokeCreate) => {
   try {
-    const response = await axios.post<CreateResponse>(
-      "http://localhost:3001/pokedex/create",
-      values
-    );
-    revalidatePath("/pokedex");
-    if (!response.data.error)
+    const valuesValidated = createSchema.safeParse(values);
+    console.log(valuesValidated);
+    if (valuesValidated.success) {
+      const response = await axios.post<CreateResponse>(
+        "http://localhost:3001/pokedex/create",
+        values
+      );
+      revalidatePath("/pokedex");
+      if (!response.data.error)
+        return {
+          success: true,
+          message: "Pokemon created successfully",
+        };
+    } else {
       return {
-        success: true,
-        message: "Pokemon created successfully",
+        success: false,
+        message: "Some data is not correct",
       };
+    }
   } catch (error) {
     if (axios.isAxiosError(error)) {
       return {

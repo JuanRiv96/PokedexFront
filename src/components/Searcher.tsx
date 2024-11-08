@@ -53,9 +53,11 @@ export const Searcher = () => {
         </p>
         <div className="flex flex-row items-center justify-center space-x-2 md:w-80">
             <Input
-                type="text" 
-                placeholder="Nombre del pokemon" 
-                id="SerchBar"
+                id="name"
+                name="name"
+                type="text"
+                isRequired
+                placeholder="Pokemon name..." 
                 size="sm"
                 radius="lg"
                 autoComplete="off"
